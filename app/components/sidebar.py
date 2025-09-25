@@ -64,11 +64,6 @@ def sidebar() -> rx.Component:
                     rx.el.p("Online", class_name="text-xs text-green-400"),
                     class_name="flex-1 min-w-0",
                 ),
-                rx.el.button(
-                    rx.icon("log-out", size=20),
-                    on_click=AuthState.logout,
-                    class_name="text-gray-400 hover:text-white cursor-pointer p-2 rounded-md hover:bg-gray-800/50",
-                ),
                 class_name="p-4 border-t border-gray-800 flex items-center gap-4",
             ),
         ),

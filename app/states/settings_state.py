@@ -20,9 +20,8 @@ class SettingsState(rx.State):
     active_provider: Literal["Gemini", "Grok", "Cohere", "OpenAI"] = "Gemini"
 
     @rx.var
-    async def show_onboarding(self) -> bool:
-        auth = await self.get_state(AuthState)
-        return auth.is_authenticated and (not self.settings_json)
+    def show_onboarding(self) -> bool:
+        return not self.settings_json
 
     @rx.var
     def api_keys(self) -> APIKeys:
