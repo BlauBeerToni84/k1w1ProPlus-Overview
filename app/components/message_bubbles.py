@@ -1,5 +1,5 @@
 import reflex as rx
-from app.states.base_state import State
+from app.states.chat_state import ChatState
 
 
 def user_message(content: str) -> rx.Component:
@@ -53,7 +53,9 @@ def code_message(message: dict) -> rx.Component:
                     rx.el.button(
                         rx.icon("copy", size=16),
                         "Copy",
-                        on_click=lambda: State.copy_to_clipboard(message["content"]),
+                        on_click=lambda: ChatState.copy_to_clipboard(
+                            message["content"]
+                        ),
                         class_name="flex items-center gap-2 text-xs text-gray-400 hover:text-white px-3 py-1.5 bg-gray-800/50 rounded-md transition-colors",
                     ),
                     class_name="absolute top-2 right-2 opacity-50 hover:opacity-100 transition-opacity",
@@ -90,7 +92,7 @@ def build_status_message() -> rx.Component:
         "OK": rx.icon("check_check"),
         "Fail": rx.icon("circle_x"),
     }
-    current_status = State.build_info["status"]
+    current_status = ChatState.build_info["status"]
     return rx.el.div(
         rx.icon("square_terminal", size=24, class_name="text-[#33CFFF] flex-shrink-0"),
         rx.el.div(
@@ -104,7 +106,7 @@ def build_status_message() -> rx.Component:
                     class_name="flex items-center gap-3",
                 ),
                 rx.el.p(
-                    f"ETA: {State.build_info['eta']}",
+                    f"ETA: {ChatState.build_info['eta']}",
                     class_name="text-sm text-gray-400 font-['Source_Code_Pro']",
                 ),
                 class_name="flex items-center justify-between",
@@ -112,12 +114,12 @@ def build_status_message() -> rx.Component:
             rx.el.div(
                 rx.el.div(
                     class_name="bg-[#00AEEF] h-2 rounded-full transition-all duration-500",
-                    style={"width": f"{State.build_info['progress']}%"},
+                    style={"width": f"{ChatState.build_info['progress']}%"},
                 ),
                 class_name="w-full bg-gray-700 rounded-full h-2",
             ),
             rx.el.p(
-                f"{State.build_info['progress']}% Complete",
+                f"{ChatState.build_info['progress']}% Complete",
                 class_name="text-right text-sm text-gray-400 mt-2",
             ),
             class_name="flex-1 space-y-3 p-4 border border-gray-700 rounded-lg bg-gray-900/50",

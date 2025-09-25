@@ -3,7 +3,7 @@ from app.components.sidebar import sidebar
 from app.components.chat_view import chat_view
 from app.components.settings_view import settings_view
 from app.components.onboarding_view import onboarding_view
-from app.states.base_state import State
+from app.states.chat_state import ChatState
 from app.states.settings_state import SettingsState
 
 
@@ -14,7 +14,7 @@ def main_layout() -> rx.Component:
                 sidebar(),
                 rx.el.div(
                     rx.match(
-                        State.active_view,
+                        ChatState.active_view,
                         ("chat", chat_view()),
                         ("settings", settings_view()),
                         rx.el.div("Unknown View"),

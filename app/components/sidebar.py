@@ -1,5 +1,6 @@
 import reflex as rx
-from app.states.base_state import State
+from app.states.chat_state import ChatState
+from app.states.project_state import ProjectState
 from app.states.auth_state import AuthState
 
 
@@ -15,17 +16,26 @@ def sidebar() -> rx.Component:
         ),
         rx.el.div(
             rx.el.div(
-                rx.el.h2(
-                    "Projects",
-                    class_name="font-['Space_Grotesk'] text-sm font-semibold uppercase text-gray-500 px-4 pt-4 pb-2",
+                rx.el.div(
+                    rx.el.h2(
+                        "Projects",
+                        class_name="font-['Space_Grotesk'] text-sm font-semibold uppercase text-gray-500 px-4 pt-4 pb-2",
+                    ),
+                    rx.el.button(
+                        rx.icon("plus", size=16),
+                        "New Project",
+                        on_click=ProjectState.create_project,
+                        class_name="text-xs flex items-center gap-2 text-gray-400 hover:text-white transition-colors",
+                    ),
+                    class_name="flex justify-between items-center",
                 ),
                 rx.el.input(
                     placeholder="Search projects...",
-                    on_change=State.set_project_search_query,
-                    class_name="mx-4 mb-2 w-[calc(100%-2rem)] bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm placeholder-gray-500 focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] outline-none",
+                    on_change=ProjectState.set_project_search_query,
+                    class_name="mx-4 my-2 w-[calc(100%-2rem)] bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm placeholder-gray-500 focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] outline-none",
                 ),
                 rx.el.div(
-                    rx.foreach(State.filtered_projects, project_item),
+                    rx.foreach(ProjectState.filtered_projects, project_item),
                     class_name="flex flex-col gap-1 px-4 overflow-y-auto",
                 ),
                 class_name="flex-1 flex flex-col",
@@ -36,9 +46,9 @@ def sidebar() -> rx.Component:
                 rx.el.button(
                     rx.icon("message-circle", size=20),
                     "Chat",
-                    on_click=lambda: State.set_active_view("chat"),
+                    on_click=lambda: ChatState.set_active_view("chat"),
                     class_name=rx.cond(
-                        State.active_view == "chat",
+                        ChatState.active_view == "chat",
                         "flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg bg-[#00AEEF]/10 text-[#33CFFF] font-semibold",
                         "flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800/50 hover:text-white transition-colors",
                     ),
@@ -46,9 +56,9 @@ def sidebar() -> rx.Component:
                 rx.el.button(
                     rx.icon("settings", size=20),
                     "Settings",
-                    on_click=lambda: State.set_active_view("settings"),
+                    on_click=lambda: ChatState.set_active_view("settings"),
                     class_name=rx.cond(
-                        State.active_view == "settings",
+                        ChatState.active_view == "settings",
                         "flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg bg-[#00AEEF]/10 text-[#33CFFF] font-semibold",
                         "flex items-center gap-3 w-full text-left px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800/50 hover:text-white transition-colors",
                     ),
@@ -79,9 +89,9 @@ def project_item(project: dict) -> rx.Component:
             class_name="flex-1 text-left",
         ),
         class_name=rx.cond(
-            State.current_project_id == project["id"],
+            ProjectState.current_project_id == project["id"],
             "w-full flex items-center p-2 rounded-md bg-gray-700/50 text-white",
             "w-full flex items-center p-2 rounded-md text-gray-400 hover:bg-gray-800/50 hover:text-white transition-colors",
         ),
-        on_click=lambda: State.select_project(project["id"]),
+        on_click=lambda: ProjectState.select_project(project["id"]),
     )

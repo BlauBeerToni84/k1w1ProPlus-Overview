@@ -1,6 +1,5 @@
 import reflex as rx
 from app.components.main_layout import main_layout
-from app.states.base_state import State
 
 
 def index() -> rx.Component:
@@ -9,7 +8,7 @@ def index() -> rx.Component:
 
 app = rx.App(
     theme=rx.theme(
-        appearance="light", has_background=True, radius="large", accent_color="blue"
+        appearance="light", has_background=True, radius="large", accent_color="cyan"
     ),
     head_components=[
         rx.el.link(rel="preconnect", href="https://fonts.googleapis.com"),
