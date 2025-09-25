@@ -12,39 +12,55 @@ def settings_view() -> rx.Component:
             ),
             class_name="p-6 border-b border-gray-800",
         ),
-        rx.el.form(
-            rx.el.div(
-                settings_section(
-                    "AI Provider Keys",
-                    api_input("gemini", "Google Gemini API Key", "gem"),
-                    api_input("grok", "Grok API Key", "cloud"),
-                    api_input("cohere", "Cohere Command-R API Key", "message-circle"),
-                    api_input("openai", "OpenAI GPT API Key", "brain-circuit"),
-                ),
-                settings_section(
-                    "DevOps Services",
-                    api_input("expo", "Expo/EAS Token", "smartphone"),
-                    api_input("github", "GitHub PAT", "github"),
-                    api_input(
-                        "firebase",
-                        "Firebase WebConfig (JSON)",
-                        "flame",
-                        is_textarea=True,
+        rx.el.div(
+            rx.el.form(
+                rx.el.div(
+                    settings_section(
+                        "Active AI Provider",
+                        rx.el.select(
+                            rx.foreach(
+                                SettingsState.ai_providers,
+                                lambda provider: rx.el.option(provider, value=provider),
+                            ),
+                            value=SettingsState.active_provider,
+                            on_change=SettingsState.set_active_provider,
+                            class_name="w-full md:w-1/2 bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-200 focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] outline-none",
+                        ),
                     ),
+                    settings_section(
+                        "AI Provider Keys",
+                        api_input("gemini", "Google Gemini API Key", "gem"),
+                        api_input("grok", "Grok API Key", "cloud"),
+                        api_input(
+                            "cohere", "Cohere Command-R API Key", "message-circle"
+                        ),
+                        api_input("openai", "OpenAI GPT API Key", "brain-circuit"),
+                    ),
+                    settings_section(
+                        "DevOps Services",
+                        api_input("expo", "Expo/EAS Token", "smartphone"),
+                        api_input("github", "GitHub PAT", "github"),
+                        api_input(
+                            "firebase",
+                            "Firebase WebConfig (JSON)",
+                            "flame",
+                            is_textarea=True,
+                        ),
+                    ),
+                    class_name="space-y-8",
                 ),
-                class_name="space-y-8",
-            ),
-            rx.el.div(
-                rx.el.button(
-                    "Save Settings",
-                    type="submit",
-                    class_name="bg-[#00AEEF] text-black font-semibold px-6 py-3 rounded-lg hover:bg-[#33CFFF] transition-colors shadow-lg shadow-[#00AEEF]/10",
+                rx.el.div(
+                    rx.el.button(
+                        "Save Settings",
+                        type="submit",
+                        class_name="bg-[#00AEEF] text-black font-semibold px-6 py-3 rounded-lg hover:bg-[#33CFFF] transition-colors shadow-lg shadow-[#00AEEF]/10",
+                    ),
+                    class_name="p-6 border-t border-gray-800 mt-8",
                 ),
-                class_name="p-6 border-t border-gray-800 mt-8",
+                on_submit=SettingsState.save_settings,
             ),
-            on_submit=SettingsState.save_settings,
+            class_name="p-6",
         ),
-        class_name="p-6",
     )
 
 

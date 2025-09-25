@@ -67,12 +67,20 @@ def sidebar() -> rx.Component:
             ),
             rx.el.div(
                 rx.el.div(
-                    rx.el.p(
-                        AuthState.user_email,
-                        class_name="font-semibold text-white text-sm truncate",
+                    rx.el.div(
+                        rx.el.p(
+                            AuthState.user_email,
+                            class_name="font-semibold text-white text-sm truncate",
+                        ),
+                        rx.el.p("Online", class_name="text-xs text-green-400"),
+                        class_name="flex-1 min-w-0",
                     ),
-                    rx.el.p("Online", class_name="text-xs text-green-400"),
-                    class_name="flex-1 min-w-0",
+                    rx.el.button(
+                        rx.icon("log-out", size=18),
+                        on_click=AuthState.logout,
+                        class_name="text-gray-500 hover:text-red-400 transition-colors p-2 rounded-md",
+                    ),
+                    class_name="flex items-center justify-between",
                 ),
                 class_name="p-4 border-t border-gray-800 flex items-center gap-4",
             ),

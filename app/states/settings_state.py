@@ -2,7 +2,6 @@ import reflex as rx
 from pydantic import BaseModel
 from typing import Literal
 import logging
-from app.states.auth_state import AuthState
 
 
 class APIKeys(BaseModel):
@@ -18,6 +17,7 @@ class APIKeys(BaseModel):
 class SettingsState(rx.State):
     settings_json: str = rx.LocalStorage(name="k1w1_pro_plus_settings_v2")
     active_provider: Literal["Gemini", "Grok", "Cohere", "OpenAI"] = "Gemini"
+    ai_providers: list[str] = ["Gemini", "Grok", "Cohere", "OpenAI"]
 
     @rx.var
     def show_onboarding(self) -> bool:

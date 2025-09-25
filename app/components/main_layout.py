@@ -9,7 +9,9 @@ from app.states.settings_state import SettingsState
 
 def main_layout() -> rx.Component:
     return rx.el.main(
-        rx.el.div(
+        rx.cond(
+            SettingsState.show_onboarding,
+            onboarding_view(),
             rx.el.div(
                 sidebar(),
                 rx.el.div(
@@ -21,9 +23,8 @@ def main_layout() -> rx.Component:
                     ),
                     class_name="flex-1 h-screen overflow-y-auto",
                 ),
-                class_name="flex flex-row bg-[#0A0A0F]",
+                class_name="flex flex-row bg-[#0A0A0F] h-screen",
             ),
-            rx.cond(SettingsState.show_onboarding, onboarding_view(), rx.fragment()),
         ),
-        class_name="font-['Inter'] text-white",
+        class_name="font-['Inter'] text-white bg-[#0A0A0F]",
     )

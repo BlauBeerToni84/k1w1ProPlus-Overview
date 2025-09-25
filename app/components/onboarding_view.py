@@ -20,18 +20,28 @@ def onboarding_view() -> rx.Component:
                     settings_section(
                         "AI Provider Keys",
                         api_input("gemini", "Google Gemini API Key", "gem"),
+                        api_input("grok", "Grok API Key", "cloud"),
+                        api_input(
+                            "cohere", "Cohere Command-R API Key", "message-circle"
+                        ),
                         api_input("openai", "OpenAI GPT API Key", "brain-circuit"),
                     ),
                     settings_section(
                         "DevOps Services",
                         api_input("expo", "Expo/EAS Token", "smartphone"),
                         api_input("github", "GitHub PAT", "github"),
+                        api_input(
+                            "firebase",
+                            "Firebase WebConfig (JSON)",
+                            "flame",
+                            is_textarea=True,
+                        ),
                     ),
                     class_name="space-y-6",
                 ),
                 rx.el.div(
                     rx.el.button(
-                        "Get Started",
+                        "Save and Get Started",
                         type="submit",
                         class_name="w-full bg-[#00AEEF] text-black font-semibold px-6 py-3 rounded-lg hover:bg-[#33CFFF] transition-colors shadow-lg shadow-[#00AEEF]/10",
                     ),
